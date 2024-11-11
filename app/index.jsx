@@ -8,6 +8,7 @@ import WeatherMain from "@/components/WeatherMain";
 import WeatherConditionList from "../components/WeatherConditionList";
 import fetchWeather from "../utils/Api.jsx";
 import MyText from "../components/UIElements/MyText.jsx";
+import WeatherHourlyList from "../components/WeatherHourlyList.jsx";
 
 export default function Index() {
   const [place, setPlace] = useState('');
@@ -58,9 +59,9 @@ export default function Index() {
         </View>
       )} 
       {weatherData && !isLoading && (
-        <ScrollView contentContainerStyle={{alignItems:"center"}}>  
-          <MyText type="title" style={styles.placeTitle}>{place}</MyText>
-          <WeatherMain iconCode={weatherData.current.weather[0].icon} temperature={weatherData.current.temp}/>
+        <ScrollView contentContainerStyle={{alignItems:"center", rowGap:20}}>  
+          <WeatherMain place={place} iconCode={weatherData.current.weather[0].icon} temperature={weatherData.current.temp}/>
+          <WeatherHourlyList data={weatherData.hourly}/>
           <WeatherConditionList data={weatherData.current}/>
         </ScrollView> 
       )}   
@@ -81,8 +82,7 @@ const styles  = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 1,
     marginTop: 15,
-    marginBottom: 40,
-    borderRadius: 30
+    borderRadius: 30,
   },
   searchIcon: {
     padding: 10,

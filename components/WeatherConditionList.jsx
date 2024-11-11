@@ -42,7 +42,7 @@ const styles  = StyleSheet.create({
     alignItems:"center"
   },
   weatherCondList: {
-    marginTop: 30,
+   
     flexDirection: "row",
     flexWrap: 'wrap',
     rowGap: 20
