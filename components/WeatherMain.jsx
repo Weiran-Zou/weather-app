@@ -1,13 +1,14 @@
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import WeatherIcon from "./WeatherIcon";
+import MyText from "./UIElements/MyText";
 
 export default function weatherMain({iconCode, temperature}) {
   return (
     <View style={styles.weatherMain}>
         <WeatherIcon iconCode={iconCode} width={120} height={120}/>
         <View style={styles.weatherText}>
-            <Text style={styles.weatherMainTemp}>{temperature} </Text>
-            <Text style={styles.weatherMainDeg}>&deg;C</Text>
+            <MyText style={styles.weatherMainTemp}>{temperature} </MyText>
+            <MyText style={styles.weatherMainDeg}>&deg;C</MyText>
         </View>
     </View>
   )   
@@ -25,12 +26,10 @@ const styles  = StyleSheet.create({
   },
   weatherMainTemp: {
     fontSize: 40,
-    fontWeight: "bold",
-    color:"#fbfbfb"
+    fontWeight: "bold"
   },
   weatherMainDeg: {
     fontSize: 30,
-    fontWeight: "bold",
-    color:"#fbfbfb"
+    fontWeight: "bold"
   }
 })

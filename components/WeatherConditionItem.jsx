@@ -1,4 +1,5 @@
-import { Text, View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
+import MyText from "./UIElements/MyText";
 
 const getUnit = (weather) => {
     switch(weather) {
@@ -25,8 +26,8 @@ export default function WeatherCondItem ({condText, value, iconPath}) {
     return (
         <View style={styles.container}>
             <Image source={iconPath} style={{width: 32, height: 32}}/>
-            <Text style={styles.condText}>{condText}</Text>
-            <Text style={styles.value}>{value} <Text style={styles.unit}>{unit}</Text></Text>       
+            <MyText style={styles.condText}>{condText}</MyText>
+            <MyText style={styles.value}>{value} <MyText style={styles.unit}>{unit}</MyText></MyText>       
         </View>
     )
 }
@@ -35,19 +36,14 @@ const styles  = StyleSheet.create({
     container: {
       justifyContent: "center",
       alignItems: "center",
-      width: "33%"
-    },
-    condText: {
-      color: "#fbfbfb"
+      width: "33%",
+      rowGap:5
     },
     value: {
-      color:  "#fbfbfb",
       fontSize: 20,
-      marginTop: 10
+      marginTop: 5
     },
     unit: {
       fontSize: 16,
-      color:  "#fbfbfb",
-    
     }
   })

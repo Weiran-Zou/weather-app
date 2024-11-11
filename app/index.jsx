@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
+import { useState } from "react";
+import { View, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import Feather from '@expo/vector-icons/Feather';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {GOOGLE_PLACES_API_KEY} from '@env'
@@ -7,11 +7,12 @@ import 'react-native-get-random-values'
 import WeatherMain from "@/components/WeatherMain";
 import WeatherConditionList from "../components/WeatherConditionList";
 import fetchWeather from "../utils/Api.jsx";
+import MyText from "../components/UIElements/MyText.jsx";
 
 export default function Index() {
-  const [place, onChangePlace] = React.useState('');
-  const [weatherData, onChangeWeatherData] = React.useState(null);
-  const [isLoading, onChangeIsLoading] = React.useState(false);
+  const [place, setPlace] = useState('');
+  const [weatherData, setWeatherData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <View style={styles.container} >
       <View style={styles.searchBar}>
@@ -26,16 +27,16 @@ export default function Index() {
           }}
           onPress={async (data, details) => {
             console.log(data.description)
-            onChangePlace(data.description.split(",")[0]);
+            setPlace(data.description.split(",")[0]);
             // console.log(details?.geometry?.location);
             let loc = details?.geometry?.location;
             console.log(loc)
             console.log(loc.lat + " " + loc.lng)
-            onChangeIsLoading(true);
+            setIsLoading(true);
             const response = await fetchWeather(loc.lat, loc.lng)
             // console.log(response);
-            onChangeWeatherData(response);
-            onChangeIsLoading(false);
+            setWeatherData(response);
+            setIsLoading(false);
           }}
           onFail={(error) => console.error(error)}
           styles={{
@@ -53,12 +54,12 @@ export default function Index() {
       )}
       {!weatherData && !isLoading && (
         <View style={styles.noPlaceContainer}>  
-          <Text style={styles.noPlaceText}>Please search a place to view the weather.</Text>
+          <MyText title style={styles.noPlaceText}>Please search a place to view the weather.</MyText>
         </View>
       )} 
       {weatherData && !isLoading && (
         <ScrollView contentContainerStyle={{alignItems:"center"}}>  
-          <Text style={styles.placeTitle}>{place}</Text>
+          <MyText type="title" style={styles.placeTitle}>{place}</MyText>
           <WeatherMain iconCode={weatherData.current.weather[0].icon} temperature={weatherData.current.temp}/>
           <WeatherConditionList data={weatherData.current}/>
         </ScrollView> 
@@ -74,18 +75,13 @@ const styles  = StyleSheet.create({
     backgroundColor: '#19181b',
     alignItems:"center"
   },
-  placeTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color:"#fbfbfb",
-    marginTop: 40
-  },
   searchBar: {
     width: "95%",
     flexDirection: 'row',
     backgroundColor: 'white',
     borderWidth: 1,
     marginTop: 15,
+    marginBottom: 40,
     borderRadius: 30
   },
   searchIcon: {
@@ -94,11 +90,8 @@ const styles  = StyleSheet.create({
   noPlaceContainer: {
     flex:1,
     justifyContent:"center",
-    
-    
   },
   noPlaceText:{
-    color:"#fbfbfb",
     fontSize: 20,
   },
   loadingContainer: {

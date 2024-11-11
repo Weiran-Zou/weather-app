@@ -1,5 +1,6 @@
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import WeatherCondItem from "./WeatherConditionItem";
+import MyText from "./UIElements/MyText";
 
 const weatherCondIconPaths = {
   clouds: require("../assets/icons/clouds-icon.png"),
@@ -15,7 +16,7 @@ export default function WeatherConditionList({data}) {
   
     return (
         <View style={styles.container}>
-          <Text style={styles.heading}>Weather Conditions</Text>
+          <MyText type="title">Weather Conditions</MyText>
           <View style={styles.weatherCondList}>
             {/* map weather conditions */}
             {Object.entries(data).map(([key, value], index) => {
@@ -45,10 +46,5 @@ const styles  = StyleSheet.create({
     flexDirection: "row",
     flexWrap: 'wrap',
     rowGap: 20
-  },
-  heading: {
-    color: "#fbfbfb",
-    fontSize: 20,
-    fontWeight: "bold"
   }
 })
