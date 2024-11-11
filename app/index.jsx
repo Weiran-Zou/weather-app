@@ -6,34 +6,11 @@ import {GOOGLE_PLACES_API_KEY} from '@env'
 import 'react-native-get-random-values'
 import WeatherMain from "@/components/WeatherMain";
 import WeatherConditionList from "../components/WeatherConditionList";
-
-const DUMMY_DATA = {
-  dt:1684929490,
-  sunrise:1684926645,
-  sunset:1684977332,
-  temp:292.55,
-  feels_like:292.87,
-  pressure:1014,
-  humidity:89,
-  dew_point:290.69,
-  uvi:0.16,
-  clouds:53,
-  visibility:10000,
-  wind_speed:3.13,
-  wind_deg:93,
-  wind_gust:6.71,
-  weather:[
-    {
-      id:803,
-      main:"Clouds",
-      description:"broken clouds",
-      icon:"04d"
-    }
-  ]
-}
+import fetchWeather from "../utils/Api.jsx";
 
 export default function Index() {
   const [place, onChangePlace] = React.useState('');
+  const [weatherData, onChangeWeatherData] = React.useState(null);
   return (
     <View style={styles.container} >
       <View style={styles.searchBar}>
@@ -46,10 +23,16 @@ export default function Index() {
             key: GOOGLE_PLACES_API_KEY,
             language: 'en',
           }}
-          onPress={(data, details) => {
+          onPress={async (data, details) => {
             console.log(data.description)
             onChangePlace(data.description.split(",")[0]);
-            console.log(details?.geometry?.location);
+            // console.log(details?.geometry?.location);
+            let loc = details?.geometry?.location;
+            console.log(loc)
+            console.log(loc.lat + " " + loc.lng)
+            const response = await fetchWeather(loc.lat, loc.lng)
+            // console.log(response);
+            onChangeWeatherData(response);
           }}
           onFail={(error) => console.error(error)}
           styles={{
@@ -59,12 +42,13 @@ export default function Index() {
           }}
         />
       </View>
-      <ScrollView contentContainerStyle={{alignItems:"center"}}>
-        <Text style={styles.placeTitle}>{place}</Text>
-        <WeatherMain iconCode={DUMMY_DATA.weather[0].icon} temperature={DUMMY_DATA.temp}/>
-        <WeatherConditionList data={DUMMY_DATA}/>
-        {/* <WeatherConditionList data={DUMMY_DATA}/> */}
-      </ScrollView>   
+      {weatherData &&
+        <ScrollView contentContainerStyle={{alignItems:"center"}}>  
+          <Text style={styles.placeTitle}>{place}</Text>
+          <WeatherMain iconCode={weatherData.current.weather[0].icon} temperature={weatherData.current.temp}/>
+          <WeatherConditionList data={weatherData.current}/>
+        </ScrollView>   
+      }
     </View>
   );
 }
