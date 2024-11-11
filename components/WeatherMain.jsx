@@ -17,18 +17,18 @@ const styles  = StyleSheet.create({
   weatherMain: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent:"center",
     columnGap: 10
   },
   weatherText: {
     flexDirection: "row",
   },
   weatherMainTemp: {
-    fontSize: 70,
+    fontSize: 40,
     fontWeight: "bold",
     color:"#fbfbfb"
   },
   weatherMainDeg: {
-    paddingTop:15,
     fontSize: 30,
     fontWeight: "bold",
     color:"#fbfbfb"
