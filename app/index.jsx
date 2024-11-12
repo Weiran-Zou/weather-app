@@ -9,6 +9,7 @@ import WeatherConditionList from "../components/weather/WeatherConditionList.jsx
 import fetchWeather from "../utils/Api.jsx";
 import MyText from "../components/UIElements/MyText.jsx";
 import WeatherHourlyList from "../components/weather/WeatherHourlyList.jsx";
+import WeatherDailyList from "../components/weather/WeatherDailyList.jsx";
 
 export default function Index() {
   const [place, setPlace] = useState('');
@@ -59,9 +60,10 @@ export default function Index() {
         </View>
       )} 
       {weatherData && !isLoading && (
-        <ScrollView contentContainerStyle={{alignItems:"center", rowGap:20}}>  
+        <ScrollView contentContainerStyle={{alignItems:"center", rowGap:30}}>  
           <WeatherMain place={place} iconCode={weatherData.current.weather[0].icon} temperature={weatherData.current.temp}/>
           <WeatherHourlyList data={weatherData.hourly}/>
+          <WeatherDailyList data={weatherData.daily} />
           <WeatherConditionList data={weatherData.current}/>
         </ScrollView> 
       )}   
