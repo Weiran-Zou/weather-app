@@ -13,13 +13,14 @@ import WeatherDailyList from "../components/weather/WeatherDailyList.jsx";
 import { COLORS } from "../constants/Colors.jsx";
 
 export default function Index() {
-  const [place, setPlace] = useState('');
+  const [place, setPlace] = useState(''); // searched place
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   return (
     <View style={styles.container} >
       <View style={styles.searchBar}>
         <Feather name="search" size={24} color="black" style={styles.searchIcon}/>
+        {/* Google Places autocomplete field for searching places */}
         <GooglePlacesAutocomplete
           GooglePlacesDetailsQuery={{ fields: "geometry" }}
           fetchDetails={true}
@@ -55,6 +56,7 @@ export default function Index() {
         </View>
         
       )}
+      {/* Displaying text when no place is searched */}
       {!weatherData && !isLoading && (
         <View style={styles.noPlaceContainer}>  
           <MyText title style={styles.noPlaceText}>Please search a place to view the weather.</MyText>

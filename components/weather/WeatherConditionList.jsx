@@ -14,24 +14,24 @@ const weatherCondIconPaths = {
 
 export default function WeatherConditionList({data}) {
   
-    return (
-        <View style={styles.container}>
-          <MyText type="title">Weather Conditions</MyText>
-          <View style={styles.weatherCondList}>
-            {/* map weather conditions */}
-            {Object.entries(data).map(([key, value], index) => {
-              if (weatherCondIconPaths[key]) {
-                return (
-                  <WeatherCondItem key={index} condText={key} value={value} iconPath={weatherCondIconPaths[key]}/>
-                )
-              }
-              
-            })}
+  return (
+    <View style={styles.container}>
+      <MyText type="title">Weather Conditions</MyText>
+      <View style={styles.weatherCondList}>
+        {/* map weather conditions */}
+        {Object.entries(data).map(([key, value], index) => {
+          if (weatherCondIconPaths[key]) {
+            return (
+              <WeatherCondItem key={index} condText={key} value={value} iconPath={weatherCondIconPaths[key]}/>
+            )
+          }
+          
+        })}
 
-          </View>
-        </View>
-        
-    )
+      </View>
+    </View>
+      
+  )
 }
 
 const styles  = StyleSheet.create({

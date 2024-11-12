@@ -7,6 +7,7 @@ export default function WeatherHourlyList({data}) {
   return (
     <View style={styles.container}>
       <MyText type="title">Hourly</MyText>
+      {/* list of hourly forecast weather data */}
       <FlatList 
         data={data}
         renderItem={({item}) => {return <WeatherHourlyItem item={item}/>}}

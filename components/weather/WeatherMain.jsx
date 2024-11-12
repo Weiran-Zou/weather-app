@@ -6,6 +6,7 @@ export default function weatherMain({iconCode, temperature, place}) {
   let temp = Math.round(temperature);
   return (
     <View style={styles.container}>
+      {/* place searched by user */}
       <MyText type="title">{place}</MyText>
       <View style={styles.weatherMain}>
         <WeatherIcon iconCode={iconCode} width={120} height={120}/>

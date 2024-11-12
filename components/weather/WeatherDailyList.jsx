@@ -6,6 +6,7 @@ export default function WeatherDailyList({data}) {
   return (
     <View style={styles.container}>
       <MyText type="title">Daily</MyText>
+      {/* map daily forecast weather data*/}
       {data.map((item, index) => {
         return <WeatherDailyItem key={index} item={item}/>
       })}

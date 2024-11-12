@@ -4,15 +4,15 @@ import WeatherIcon from "./WeatherIcon.jsx"
 import { getTime } from "../../utils/Time.jsx"
 
 export default function WeatherHourlyItem({item}) {
-    let time = getTime(item.dt);
-    let temp = Math.round(item.temp);
-    return (
-      <View style={styles.container}>
-        <MyText>{ time }</MyText>
-        <WeatherIcon iconCode={item.weather[0].icon} width={40} height={40}/>
-        <MyText style={styles.temp}>{temp}&deg;</MyText>  
-      </View>
-    )
+  let time = getTime(item.dt);
+  let temp = Math.round(item.temp);
+  return (
+    <View style={styles.container}>
+      <MyText>{ time }</MyText>
+      <WeatherIcon iconCode={item.weather[0].icon} width={40} height={40}/>
+      <MyText style={styles.temp}>{temp}&deg;</MyText>  
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

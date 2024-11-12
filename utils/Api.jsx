@@ -1,6 +1,6 @@
 import {OPEN_WEATHER_API_KEY} from '@env'
 
-// fetch current and forecasts weather data
+// fetch current and forecasts weather data from OpenWeather API
 const fetchWeather = async (lat, lon) => {
   let responseData;
     try {

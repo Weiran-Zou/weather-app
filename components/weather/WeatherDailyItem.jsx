@@ -11,16 +11,16 @@ export default function WeatherDailyItem({item}) {
   return (
   <View style={styles.container}>
     <View style={styles.dayContainer}> 
-      <MyText style={styles.day}>{day} </MyText>
+      <MyText style={styles.day}>{day}</MyText>
       <MyText style={styles.date}>{date}</MyText>
     </View>
-    <WeatherIcon style={styles.icon} iconCode={item.weather[0].icon} width={60} height={60}/>
+    <WeatherIcon style={styles.weatherIcon} iconCode={item.weather[0].icon} width={60} height={60}/>
     <View style={styles.humidityIconContainer}>
       <Image source={require("../../assets/icons/humidity-icon.png")} style={{ width: 15, height: 15}}/>
       <MyText style={styles.date}>{item.humidity} %</MyText>
     </View>
     
-    <MyText style={styles.temp}>{ tempMax}&deg; / {tempMin}&deg;</MyText> 
+    <MyText style={styles.temp}>{tempMax}&deg; / {tempMin}&deg;</MyText> 
   </View>
   )
 }
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     width:"100%",
     
   },
-  icon: {
+  weatherIcon: {
     flex:1,
     alignItems:"center",
     justifyContent:"center"
