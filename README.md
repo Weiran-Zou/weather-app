@@ -1,6 +1,11 @@
 # Weather App
 A project written in React Native displaying current weather and weather forecasts using data from the OpenWeather API
 ## Screenshots
+<img src="assets/images/screenshots/home-no-place.jpg" width="200" height="400"/>.
+<img src="assets/images/screenshots/search.jpg" width="200" height="400"/>.
+<img src="assets/images/screenshots/home-main-and-hourly.jpg" width="200" height="400"/>.
+<img src="assets/images/screenshots/home-daily.jpg" width="200" height="400"/>.
+<img src="assets/images/screenshots/home-weather-conditions.jpg" width="200" height="400"/>.
 ## Introduction
 The React Native weather app features searching places, showing current weather and weather forecasts.  
 It contains the following key features:
@@ -10,6 +15,7 @@ It contains the following key features:
 - Daily weather forecasts
 ## Technologies used
 - React Native
+- JavaScript
 - Expo
 - GooglePlacesAutocomplete library
 - OpenWeather API
