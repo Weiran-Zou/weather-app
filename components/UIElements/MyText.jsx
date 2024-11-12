@@ -1,4 +1,5 @@
 import { Text, StyleSheet } from "react-native";
+import { COLORS } from "../../constants/Colors";
 
 export default function MyText(props) {
   if (props.type === "title") {
@@ -11,12 +12,12 @@ export default function MyText(props) {
 
 const styles = StyleSheet.create({
     default: {
-        color:"#fbfbfb"
+        color: COLORS.fontColor
     },
     title: {
       fontSize: 20,
       fontWeight: "bold",
-      color:"#fbfbfb",
+      color: COLORS.fontColor,
       marginBottom: 20,
     }
 })

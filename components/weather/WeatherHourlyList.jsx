@@ -8,9 +8,9 @@ export default function WeatherHourlyList({data}) {
     <View style={styles.container}>
       <MyText type="title">Hourly</MyText>
       <FlatList 
-          data={data}
-          renderItem={({item}) => {return <WeatherHourlyItem item={item}/>}}
-          horizontal={true}
+        data={data}
+        renderItem={({item}) => {return <WeatherHourlyItem item={item}/>}}
+        horizontal={true}
       />
      </View>
 

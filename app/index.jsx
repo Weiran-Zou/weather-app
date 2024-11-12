@@ -10,6 +10,7 @@ import fetchWeather from "../utils/Api.jsx";
 import MyText from "../components/UIElements/MyText.jsx";
 import WeatherHourlyList from "../components/weather/WeatherHourlyList.jsx";
 import WeatherDailyList from "../components/weather/WeatherDailyList.jsx";
+import { COLORS } from "../constants/Colors.jsx";
 
 export default function Index() {
   const [place, setPlace] = useState('');
@@ -75,7 +76,7 @@ const styles  = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#19181b',
+    backgroundColor: COLORS.background,
     alignItems:"center"
   },
   searchBar: {
