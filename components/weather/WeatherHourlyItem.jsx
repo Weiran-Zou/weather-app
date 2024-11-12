@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native"
-import MyText from "./UIElements/MyText"
-import WeatherIcon from "./WeatherIcon"
-import { getTime } from "../utils/Time.jsx"
+import MyText from "../UIElements/MyText.jsx"
+import WeatherIcon from "./WeatherIcon.jsx"
+import { getTime } from "../../utils/Time.jsx"
 
 export default function WeatherHourlyItem({item}) {
     let time = getTime(item.dt);
@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 5,
-    marginRight: 5
+    marginRight: 5,
+    rowGap: 5
   },
   temp: {
     fontSize: 18

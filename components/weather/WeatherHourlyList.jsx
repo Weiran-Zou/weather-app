@@ -1,6 +1,6 @@
 import { View, FlatList, StyleSheet } from "react-native"
 import WeatherHourlyItem from "./WeatherHourlyItem"
-import MyText from "./UIElements/MyText"
+import MyText from "../UIElements/MyText"
 
 export default function WeatherHourlyList({data}) {
 

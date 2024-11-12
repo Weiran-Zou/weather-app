@@ -4,11 +4,11 @@ import Feather from '@expo/vector-icons/Feather';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {GOOGLE_PLACES_API_KEY} from '@env'
 import 'react-native-get-random-values'
-import WeatherMain from "@/components/WeatherMain";
-import WeatherConditionList from "../components/WeatherConditionList";
+import WeatherMain from "../components/weather/WeatherMain";
+import WeatherConditionList from "../components/weather/WeatherConditionList.jsx";
 import fetchWeather from "../utils/Api.jsx";
 import MyText from "../components/UIElements/MyText.jsx";
-import WeatherHourlyList from "../components/WeatherHourlyList.jsx";
+import WeatherHourlyList from "../components/weather/WeatherHourlyList.jsx";
 
 export default function Index() {
   const [place, setPlace] = useState('');

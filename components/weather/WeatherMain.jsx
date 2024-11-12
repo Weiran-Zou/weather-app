@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import WeatherIcon from "./WeatherIcon";
-import MyText from "./UIElements/MyText";
+import MyText from "../UIElements/MyText";
 
 export default function weatherMain({iconCode, temperature, place}) {
   let temp = Math.round(temperature);

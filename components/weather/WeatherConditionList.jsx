@@ -1,15 +1,15 @@
 import { View, StyleSheet } from "react-native";
 import WeatherCondItem from "./WeatherConditionItem";
-import MyText from "./UIElements/MyText";
+import MyText from "../UIElements/MyText";
 
 const weatherCondIconPaths = {
-  clouds: require("../assets/icons/clouds-icon.png"),
-  dew_point: require("../assets/icons/dew-icon.png"),
-  humidity: require("../assets/icons/humidity-icon.png"),
-  pressure: require("../assets/icons/pressure-icon.png"),
-  uvi: require("../assets/icons/uvi-icon.png"),
-  visibility: require("../assets/icons/visibility-icon.png"),
-  wind_speed:  require("../assets/icons/wind-icon.png")
+  clouds: require("../../assets/icons/clouds-icon.png"),
+  dew_point: require("../../assets/icons/dew-icon.png"),
+  humidity: require("../../assets/icons/humidity-icon.png"),
+  pressure: require("../../assets/icons/pressure-icon.png"),
+  uvi: require("../../assets/icons/uvi-icon.png"),
+  visibility: require("../../assets/icons/visibility-icon.png"),
+  wind_speed:  require("../../assets/icons/wind-icon.png")
 }
 
 export default function WeatherConditionList({data}) {

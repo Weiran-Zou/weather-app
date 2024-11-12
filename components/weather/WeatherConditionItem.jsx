@@ -1,5 +1,5 @@
 import { View, StyleSheet, Image } from "react-native";
-import MyText from "./UIElements/MyText";
+import MyText from "../UIElements/MyText";
 
 const getUnit = (weather) => {
     switch(weather) {

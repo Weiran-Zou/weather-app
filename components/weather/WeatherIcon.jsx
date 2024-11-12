@@ -1,4 +1,4 @@
-import { StyleSheet, Image } from "react-native";
+import { Image } from "react-native";
 
 export default function WeatherIcon({iconCode, width, height}) {
     return (
