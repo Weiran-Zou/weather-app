@@ -8,7 +8,7 @@ it("should return day of the month for a given unix timestamp", () => {
   expect(getDate(1732356000)).toBe(23);
 })
 
-describe("getDay function"), () => {
+describe("getDay function", () => {
   it("should return Sunday for Sunday timestamp", () => {
     expect(getDay(1732442400)).toBe("Sunday");
   })
@@ -37,6 +37,6 @@ describe("getDay function"), () => {
     expect(getDay(1732960800)).toBe("Saturday");
   })
     
-}
+})
     
    
