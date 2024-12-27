@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems:"center",
     width:"95%",
-    rowGap:5
+    rowGap:30
   }
 })

@@ -30,7 +30,7 @@ export default function search () {
             console.log(loc.lat + " " + loc.lng)
             let newLoc ={ coords: {latitude: loc.lat, longitude: loc.lng}, place: data.description.split(",")[0]};
             await setLoc(newLoc);
-            router.replace("/");
+            router.dismissTo("/");
           }}
           onFail={(error) => console.error(error)}
           styles={{

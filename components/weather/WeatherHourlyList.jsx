@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems:"center",
     width:"95%",
-    height: 300
+    height: 300,
+    rowGap: 30
   },
   temp: {
     fontSize: 18
