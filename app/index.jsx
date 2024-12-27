@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { View, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import Feather from '@expo/vector-icons/Feather';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -11,45 +11,33 @@ import MyText from "../components/UIElements/MyText.jsx";
 import WeatherHourlyList from "../components/weather/WeatherHourlyList.jsx";
 import WeatherDailyList from "../components/weather/WeatherDailyList.jsx";
 import { COLORS } from "../constants/Colors.jsx";
+import { LocationContext } from "../context/locationContext.jsx";
 
 export default function Index() {
   const [place, setPlace] = useState(''); // searched place
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { loc } = useContext(LocationContext);
+
+  async function fetchData() {
+    setIsLoading(true);
+    let {coords, place} = loc;
+    console.log(coords)
+    const response = await fetchWeather(coords.latitude, coords.longitude)
+    // console.log(response);
+    setWeatherData(response);
+    setPlace(place);
+    setIsLoading(false);
+  }
+  useEffect(() => {
+    fetchData();
+  }, [loc])
+
   return (
     <View style={styles.container} >
-      <View style={styles.searchBar}>
+      {/* <View style={styles.searchBar}>
         <Feather name="search" size={24} color="black" style={styles.searchIcon}/>
-        {/* Google Places autocomplete field for searching places */}
-        <GooglePlacesAutocomplete
-          GooglePlacesDetailsQuery={{ fields: "geometry" }}
-          fetchDetails={true}
-          placeholder="Search the place"
-          query={{
-            key: process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY,
-            language: 'en',
-          }}
-          onPress={async (data, details) => {
-            console.log(data.description)
-            setPlace(data.description.split(",")[0]);
-            // console.log(details?.geometry?.location);
-            let loc = details?.geometry?.location;
-            console.log(loc)
-            console.log(loc.lat + " " + loc.lng)
-            setIsLoading(true);
-            const response = await fetchWeather(loc.lat, loc.lng)
-            // console.log(response);
-            setWeatherData(response);
-            setIsLoading(false);
-          }}
-          onFail={(error) => console.error(error)}
-          styles={{
-            textInput: {
-             borderRadius:30
-            }
-          }}
-        />
-      </View>
+      </View> */}
       {isLoading && (
         <View style={styles.loadingContainer}> 
           <ActivityIndicator size="large" color="white"/>

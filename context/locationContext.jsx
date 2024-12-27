@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import useLocation from "../hooks/useLocation";
 
 const LocationContext = createContext({
@@ -7,7 +7,7 @@ const LocationContext = createContext({
 })
 
 const LocationProvider = (props) => {
-  const [currentLoc, setLoc] = useLocation();
+  const {currentLoc, setLoc} = useLocation();
 
   return (
     <LocationContext.Provider value={{loc: currentLoc, setLoc: setLoc}}>
