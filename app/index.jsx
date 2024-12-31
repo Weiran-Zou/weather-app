@@ -22,9 +22,9 @@ export default function Index() {
 
   async function fetchData() {
     setIsLoading(true);
-    let {coords, place} = loc;
-    console.log(coords)
-    const response = await fetchWeather(coords.latitude, coords.longitude)
+    let {lat, lng, place} = loc;
+    console.log(loc)
+    const response = await fetchWeather(lat, lng)
     // console.log(response);
     setWeatherData(response);
     setPlace(place);
@@ -33,10 +33,7 @@ export default function Index() {
   useEffect(() => {
     fetchData();
   }, [loc])
-  const handleSearch = () => {
-    console.log("search");
-    // router.replace('/search')
-  }
+ 
   return (
     <View style={styles.container} >
       <Stack.Screen
@@ -52,9 +49,6 @@ export default function Index() {
           
         }}
       />
-      {/* <View style={styles.searchBar}>
-        <Feather name="search" size={24} color="black" style={styles.searchIcon}/>
-      </View> */}
       {isLoading && (
         <View style={styles.loadingContainer}> 
           <ActivityIndicator size="large" color="white"/>

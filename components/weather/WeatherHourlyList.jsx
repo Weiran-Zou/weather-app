@@ -6,7 +6,11 @@ import { COLORS } from "../../constants/Colors";
 
 // a list of hourly forecast weather data in a line chart view
 export default function WeatherHourlyList({data}) {
+  let minTemp = Number.MAX_VALUE;
   const mappedData = data.map((item) => {
+    if (item.temp < minTemp) {
+      minTemp = Math.round(item.temp);
+    }
     return {
       value: item.temp,
       labelComponent: () => (
@@ -15,7 +19,7 @@ export default function WeatherHourlyList({data}) {
       dataPointLabelComponent: () => (
         <MyText style={styles.temp}>{Math.round(item.temp)}&deg;</MyText>
       ),
-      dataPointLabelShiftY: -30,
+      dataPointLabelShiftY: -20,
       dataPointLabelShiftX: 15,
     }
   })
@@ -26,13 +30,14 @@ export default function WeatherHourlyList({data}) {
         {/* line chart with hourly forecast weather data */}
         <LineChart 
           data={mappedData}
-          height={180}
+          
           thickness1={1}
           hideYAxisText
           hideAxesAndRules
           color={'#EB6E4B'}
           textColor={COLORS.fontColor}
           dataPointsColor={COLORS.fontColor}
+          yAxisOffset={minTemp - 2}
          
         />
       </ScrollView>
@@ -46,10 +51,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems:"center",
     width:"95%",
-    height: 300,
+    height: 350,
     rowGap: 30
   },
   temp: {
-    fontSize: 18
+    fontSize: 16
   }
 })

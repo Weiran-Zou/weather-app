@@ -7,7 +7,7 @@ import { LocationContext } from "../context/locationContext";
 import { COLORS } from "../constants/Colors.jsx";
 
 export default function search () {
-  const {setLoc} = useContext(LocationContext);
+  const {saveLoc} = useContext(LocationContext);
 
   return (
     <View style={styles.container}>
@@ -23,13 +23,13 @@ export default function search () {
             language: 'en',
           }}
           onPress={async (data, details) => {
-            console.log(data.description)
-            console.log("place: " + data.description.split(",")[0])
+            // console.log(data.description)
+            // console.log("place: " + data.description.split(",")[0])
             let loc = details?.geometry?.location;
-            console.log(loc)
-            console.log(loc.lat + " " + loc.lng)
-            let newLoc ={ coords: {latitude: loc.lat, longitude: loc.lng}, place: data.description.split(",")[0]};
-            await setLoc(newLoc);
+            // console.log(loc)
+            // console.log(loc.lat + " " + loc.lng)
+            let newLoc ={ lat: loc.lat, lng: loc.lng, place: data.description.split(",")[0]};
+            await saveLoc(newLoc);
             router.dismissTo("/");
           }}
           onFail={(error) => console.error(error)}
