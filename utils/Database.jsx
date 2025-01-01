@@ -67,4 +67,13 @@ export async function getAllLocItems(db) {
   return locItems;
 }
 
+export async function deleteLocItem(db, item) {
+  try {
+    await db.runAsync('DELETE from locations WHERE rowid = $rowid', {$rowid: item.rowid});
+  } catch (err) {
+    console.log("deleteLocItem");
+    console.log(err);
+  }
+}
+
 

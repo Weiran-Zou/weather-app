@@ -4,8 +4,9 @@ import { LocationContext } from "../../context/locationContext"
 import { router } from "expo-router";
 import MyText from "../UIElements/MyText";
 import { COLORS } from "../../constants/Colors";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-export default function LocationItem ({item}) {
+export default function LocationItem ({item, onDelete}) {
   const { setLoc } = useContext(LocationContext);
   const onPress = async () => {
     await setLoc(item);
@@ -16,6 +17,9 @@ export default function LocationItem ({item}) {
       <MyText>
         {item.place}
       </MyText>
+      <Pressable onPress={onDelete}>
+        <MaterialIcons name="delete" size={24} color={COLORS.fontColor}/>
+      </Pressable>
     </Pressable>
    
   )
@@ -23,11 +27,13 @@ export default function LocationItem ({item}) {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     height: 50,
     borderColor: COLORS.border,
     borderWidth: 1,
     backgroundColor: COLORS.foreground,
-    paddingLeft: 10
+    paddingHorizontal: 10
   }
 }) 

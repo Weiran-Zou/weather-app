@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import { useContext, useEffect, useState } from "react";
 import { LocationContext } from "../context/locationContext";
 import { COLORS } from "../constants/Colors.jsx";
-import { openDB, getAllLocItems, closeDB } from "../utils/Database.jsx"
+import { openDB, getAllLocItems, closeDB, deleteLocItem } from "../utils/Database.jsx"
 import MyText from "../components/UIElements/MyText.jsx";
 import LocationItem from "../components/location/LocationItem.jsx";
 
@@ -18,6 +18,13 @@ export default function search () {
     let locs = await getAllLocItems(db);
     setSavedLocs(locs);
     await closeDB(db);
+  }
+  async function onDeleteItem(item) {
+    let newSavedLocs = savedLocs.filter((loc) => loc.rowid !== item.rowid);
+    setSavedLocs(newSavedLocs);
+    const db = await openDB();
+    await deleteLocItem(db, item);
+    await closeDB();
   }
 
   useEffect(() => {
@@ -56,7 +63,7 @@ export default function search () {
         {saveLoc.length > 0 && (
           <FlatList
             data={savedLocs}
-            renderItem={({item}) => <LocationItem key={item.rowid} item={item}/>} 
+            renderItem={({item}) => <LocationItem key={item.rowid} item={item} onDelete={() => onDeleteItem(item)}/>} 
             keyExtractor={item => item.rowid}
           />
         )}
