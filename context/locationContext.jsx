@@ -7,10 +7,10 @@ const LocationContext = createContext({
 })
 
 const LocationProvider = (props) => {
-  const {loc, saveLoc} = useLocation();
+  const {loc, setLoc, saveLoc} = useLocation();
 
   return (
-    <LocationContext.Provider value={{loc: loc, saveLoc: saveLoc}}>
+    <LocationContext.Provider value={{loc: loc, setLoc: setLoc, saveLoc: saveLoc}}>
       {props.children}
     </LocationContext.Provider>
   )

@@ -16,8 +16,6 @@ export default function useLocation() {
     } catch (err) {
       
     }
-    console.log("savedLoc: ");
-    console.log(savedLoc)
     if (savedLoc) {
       setLoc(savedLoc);
       return;
@@ -27,16 +25,14 @@ export default function useLocation() {
   }
 
   async function saveLoc(value) {
-    console.log(value)
     setLoc(value);
     const db = await openDB();
     await saveLocItem(db, value);
     await closeDB();
-  
   }
 
   useEffect(() => {
     getLatestSavedLoc();
   }, [])
-  return { loc, saveLoc }
+  return { loc, setLoc, saveLoc }
 }

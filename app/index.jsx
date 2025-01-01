@@ -23,9 +23,7 @@ export default function Index() {
   async function fetchData() {
     setIsLoading(true);
     let {lat, lng, place} = loc;
-    console.log(loc)
     const response = await fetchWeather(lat, lng)
-    // console.log(response);
     setWeatherData(response);
     setPlace(place);
     setIsLoading(false);
@@ -40,7 +38,7 @@ export default function Index() {
         options={{
           headerStyle: { backgroundColor: COLORS.background },
           headerTintColor: COLORS.fontColor,
-          headerTitle: props => <MyText type="title">{place}</MyText>,
+          headerTitle: props => <MyText type="title">{!isLoading && place}</MyText>,
           headerRight: () => (
             <Pressable onPressIn={() => router.push("/search")}>
               <Feather name="search" size={24} color={COLORS.fontColor} style={styles.searchIcon} />

@@ -10,7 +10,7 @@ export default function WeatherHourlyList({data}) {
   const mappedData = data.map((item) => {
     if (item.temp < minTemp) {
       minTemp = Math.round(item.temp);
-    }
+    } 
     return {
       value: item.temp,
       labelComponent: () => (
@@ -30,7 +30,6 @@ export default function WeatherHourlyList({data}) {
         {/* line chart with hourly forecast weather data */}
         <LineChart 
           data={mappedData}
-          
           thickness1={1}
           hideYAxisText
           hideAxesAndRules

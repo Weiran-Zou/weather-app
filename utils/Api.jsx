@@ -8,9 +8,7 @@ const fetchWeather = async (lat, lon) => {
       responseData = await response.json();
       if (!response.ok) {
         throw new Error(response.message);
-      }
-      //console.log(responseData)
-    
+      }   
       return responseData;
     } catch (err) {
       console.log(err);

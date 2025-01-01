@@ -1,13 +1,28 @@
-import { View, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
+import { View, StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import Feather from '@expo/vector-icons/Feather';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { router } from 'expo-router';
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LocationContext } from "../context/locationContext";
 import { COLORS } from "../constants/Colors.jsx";
+import { openDB, getAllLocItems, closeDB } from "../utils/Database.jsx"
+import MyText from "../components/UIElements/MyText.jsx";
+import LocationItem from "../components/location/LocationItem.jsx";
 
 export default function search () {
-  const {saveLoc} = useContext(LocationContext);
+  const { saveLoc } = useContext(LocationContext);
+  const [savedLocs, setSavedLocs] = useState([]);
+
+  async function getSavedLocs() {
+    const db = await openDB();
+    let locs = await getAllLocItems(db);
+    setSavedLocs(locs);
+    await closeDB(db);
+  }
+
+  useEffect(() => {
+    getSavedLocs();
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -23,11 +38,7 @@ export default function search () {
             language: 'en',
           }}
           onPress={async (data, details) => {
-            // console.log(data.description)
-            // console.log("place: " + data.description.split(",")[0])
             let loc = details?.geometry?.location;
-            // console.log(loc)
-            // console.log(loc.lat + " " + loc.lng)
             let newLoc ={ lat: loc.lat, lng: loc.lng, place: data.description.split(",")[0]};
             await saveLoc(newLoc);
             router.dismissTo("/");
@@ -40,6 +51,17 @@ export default function search () {
           }}
         />
       </View>
+      <View style={styles.locsContainer}>
+        <MyText type="title">Saved Locations</MyText>
+        {saveLoc.length > 0 && (
+          <FlatList
+            data={savedLocs}
+            renderItem={({item}) => <LocationItem key={item.rowid} item={item}/>} 
+            keyExtractor={item => item.rowid}
+          />
+        )}
+      </View>
+      
     </View>
   )
 }
@@ -47,19 +69,24 @@ export default function search () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     backgroundColor: COLORS.background,
-    alignItems:"center"
+    rowGap: 30
   },
   searchBar: {
-    width: "95%",
     flexDirection: 'row',
     backgroundColor: 'white',
     borderWidth: 1,
     marginTop: 15,
     borderRadius: 30,
+    justifyContent: "center"
   },
   searchIcon: {
     padding: 10,
   },
+  locsContainer: {
+    flex: 1,
+    rowGap: 20,
+  }
 })

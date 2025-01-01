@@ -50,3 +50,16 @@ export async function saveLocItem(db, item) {
     console.log(err)
   }
 }
+
+export async function getAllLocItems(db) {
+  let locItems;
+  try {
+    locItems = await db.getAllAsync('SELECT rowid, lat, lng, place FROM locations ORDER BY rowid DESC');
+  } catch (err) {
+    console.log("getAllLocItems");
+    console.log(err);
+  }
+  return locItems;
+}
+
+
