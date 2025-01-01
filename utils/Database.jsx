@@ -44,6 +44,11 @@ export async function getLatestLocItem(db) {
 export async function saveLocItem(db, item) {
   console.log(item.lat + " " + item.lng + " " + item.place)
   try {
+    // check if the location item to be saved already exists in db
+    let loc = await db.getFirstAsync('SELECT * FROM locations WHERE lat = ? AND lng = ?', item.lat, item.lng);
+    if (loc) {
+      return
+    }
     await db.execAsync(`INSERT INTO locations (lat, lng, place) VALUES (${item.lat}, ${item.lng}, '${item.place}')`);
   } catch (err) {
     console.log("saveLocItem")
