@@ -1,4 +1,5 @@
-import { View, StyleSheet, FlatList, ActivityIndicator } from "react-native";
+import { useRef } from "react";
+import { View, StyleSheet, FlatList, ActivityIndicator, Pressable } from "react-native";
 import Feather from '@expo/vector-icons/Feather';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { router } from 'expo-router';
@@ -8,16 +9,19 @@ import { COLORS } from "../constants/Colors.jsx";
 import { openDB, getAllLocItems, closeDB, deleteLocItem } from "../utils/Database.jsx"
 import MyText from "../components/UIElements/MyText.jsx";
 import LocationItem from "../components/location/LocationItem.jsx";
+import Entypo from '@expo/vector-icons/Entypo';
 
 export default function search () {
   const { saveLoc } = useContext(LocationContext);
   const [savedLocs, setSavedLocs] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const ref = useRef(null);
 
   async function getSavedLocs() {
     const db = await openDB();
     let locs = await getAllLocItems(db);
     setSavedLocs(locs);
-    await closeDB(db);
+    await closeDB();
   }
   async function onDeleteItem(item) {
     let newSavedLocs = savedLocs.filter((loc) => loc.rowid !== item.rowid);
@@ -25,6 +29,10 @@ export default function search () {
     const db = await openDB();
     await deleteLocItem(db, item);
     await closeDB();
+  }
+  function clearSearchInput() {
+    setSearchText("");
+    ref.current?.setAddressText("");
   }
 
   useEffect(() => {
@@ -37,6 +45,7 @@ export default function search () {
         <Feather name="search" size={24} color="black" style={styles.searchIcon}/>
         {/* Google Places autocomplete field for searching places */}
         <GooglePlacesAutocomplete
+          ref={ref}
           GooglePlacesDetailsQuery={{ fields: "geometry" }}
           fetchDetails={true}
           placeholder="Search the place"
@@ -56,7 +65,13 @@ export default function search () {
             borderRadius:30
             }
           }}
+          textInputProps={{
+            onChangeText: (text) => {setSearchText(text)}
+          }}
         />
+        {searchText && <Pressable onPress={clearSearchInput} style={styles.searchIcon}>
+          <Entypo name="cross" size={24} color="black" />
+        </Pressable>}
       </View>
       <View style={styles.locsContainer}>
         <MyText type="title">Saved Locations</MyText>
