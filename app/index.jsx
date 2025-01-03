@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
-import { View, StyleSheet, ScrollView, ActivityIndicator, Pressable, Button, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, ScrollView, ActivityIndicator, Pressable, Linking } from "react-native";
 import Feather from '@expo/vector-icons/Feather';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import 'react-native-get-random-values'
 import WeatherMain from "../components/weather/WeatherMain";
 import WeatherConditionList from "../components/weather/WeatherConditionList.jsx";
@@ -11,13 +12,25 @@ import WeatherDailyList from "../components/weather/WeatherDailyList.jsx";
 import { COLORS } from "../constants/Colors.jsx";
 import { LocationContext } from "../context/locationContext.jsx";
 import { Stack, router } from "expo-router";
+import { getCurrentLoc } from "../utils/Location"
 
 export default function Index() {
   const [place, setPlace] = useState(''); // searched place
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { loc } = useContext(LocationContext);
+  const { loc, setLoc } = useContext(LocationContext);
 
+  async function getCurrentLocation() {
+    let currentLoc = await getCurrentLoc();
+    if (currentLoc) {
+      setLoc(currentLoc);
+    } else { 
+      // redirect to app's settings if location permission was rejected
+      Linking.openSettings();
+    }
+  }
+  
+  // fetch weather data
   async function fetchData() {
     setIsLoading(true);
     let {lat, lng, place} = loc;
@@ -38,9 +51,14 @@ export default function Index() {
           headerTintColor: COLORS.fontColor,
           headerTitle: props => <MyText type="title">{!isLoading && place}</MyText>,
           headerRight: () => (
-            <Pressable onPressIn={() => router.push("/search")}>
-              <Feather name="search" size={24} color={COLORS.fontColor} style={styles.searchIcon} />
-            </Pressable>
+            <View style={styles.headerBtns}>
+              <Pressable onPressIn={() => router.push("/search")}>
+                <Feather name="search" size={24} color={COLORS.fontColor} style={styles.searchIcon} />
+              </Pressable>
+              <Pressable onPressIn={getCurrentLocation}>
+                <MaterialIcons name="gps-fixed" size={24} color={COLORS.fontColor} style={styles.searchIcon}/>
+              </Pressable>
+            </View>
           )
           
         }}
@@ -76,7 +94,9 @@ const styles  = StyleSheet.create({
     backgroundColor: COLORS.background,
     alignItems:"center"
   },
- 
+  headerBtns: {
+    flexDirection: "row"
+  },  
   searchBar: {
     width: "95%",
     flexDirection: 'row',
