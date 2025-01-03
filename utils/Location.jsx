@@ -1,5 +1,6 @@
 import * as Location from 'expo-location';
 import { openDB, closeDB, createTable, getLatestLocItem } from "../utils/Database";
+import { fetchPlace } from "../utils/Api"
 
 // get user's current location
 export async function getCurrentLoc() {
@@ -14,7 +15,10 @@ export async function getCurrentLoc() {
   }
   if (locStatus === "granted") { // granted
     let location = await Location.getCurrentPositionAsync({});
-    currentLoc = { lat:  location.coords.latitude, lng: location.coords.longitude, place: "City" }
+    let lat = location.coords.latitude;
+    let lng = location.coords.longitude;
+    let place = await fetchPlace(lat, lng);
+    currentLoc = { lat: lat, lng: lng, place: place};
   } 
   return currentLoc;
 }

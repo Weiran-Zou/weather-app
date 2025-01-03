@@ -16,4 +16,21 @@ const fetchWeather = async (lat, lon) => {
 
 }
 
-export default fetchWeather;
+// fetch place with Google reverse geocoding API
+const fetchPlace = async (lat, lng) => {
+  let responseData;
+  try {
+    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}2&key=${process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY}`);
+    responseData = await response.json();
+    if (!response.ok) {
+      throw new Error(response.message);
+    }
+    let place = responseData.results[0].formatted_address;
+    return place;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+export { fetchWeather, fetchPlace };
