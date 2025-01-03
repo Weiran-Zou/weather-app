@@ -1,27 +1,25 @@
 import { useEffect, useState } from "react";
 import { router } from 'expo-router';
-import { openDB, closeDB, createTable, getLatestLocItem, saveLocItem } from "../utils/Database";
+import { openDB, closeDB, saveLocItem } from "../utils/Database";
+import { getCurrentLoc, getLatestSavedLoc } from "../utils/Location"
 
 export default function useLocation() {
   const [loc, setLoc] = useState(null);
 
-  // get user's latest saved location from db
-  async function getLatestSavedLoc() {
-    let savedLoc;
-    try {
-      const db = await openDB();
-      await createTable(db);
-      savedLoc = await getLatestLocItem(db);
-      await closeDB();
-    } catch (err) {
-      
-    }
-    if (savedLoc) {
-      setLoc(savedLoc);
-      return;
-    } else {
-      router.replace("/search");
-    }
+  // get location
+  async function getLoc() {
+    let currentLoc = await getCurrentLoc();
+    if (currentLoc) {
+      setLoc(currentLoc);
+      router.replace('/');
+    } else { // fail to get current location
+      let savedLoc = await getLatestSavedLoc();
+      if (savedLoc) {
+        setLoc(savedLoc);
+      } else {
+        router.replace("/search");
+      }
+    } 
   }
 
   async function saveLoc(value) {
@@ -32,7 +30,7 @@ export default function useLocation() {
   }
 
   useEffect(() => {
-    getLatestSavedLoc();
+    getLoc();
   }, [])
   return { loc, setLoc, saveLoc }
 }
