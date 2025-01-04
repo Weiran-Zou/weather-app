@@ -1,26 +1,33 @@
 # Weather App
-A project written in React Native displaying current weather and weather forecasts using data from the OpenWeather API
-## Demo
-[Demo Video](https://www.youtube.com/watch?v=TpdPpvKgKb8)
+A project written in React Native displaying current weather and weather forecasts for the user-selected location using data from the OpenWeather API
 ## Screenshots
-<img src="assets/images/screenshots/home-no-place.jpg" width="200" height="400"/>.
-<img src="assets/images/screenshots/search.jpg" width="200" height="400"/>.
-<img src="assets/images/screenshots/home-main-and-hourly.jpg" width="200" height="400"/>.
+<img src="assets/images/screenshots/Home.jpg" width="200" height="400" />.
 <img src="assets/images/screenshots/home-daily.jpg" width="200" height="400"/>.
-<img src="assets/images/screenshots/home-weather-conditions.jpg" width="200" height="400"/>.
+<img src="assets/images/screenshots/Home-condition.jpg" width="200" height="400"/>.
+<img src="assets/images/screenshots/Search-1.jpg" width="200" height="400"/>.
+<img src="assets/images/screenshots/Search-2.jpg" width="200" height="400"/>.
+<img src="assets/images/screenshots/CurrentLoc.jpg" width="200" height="400"/>.
+
 ## Introduction
 The React Native weather app features searching places, showing current weather and weather forecasts.  
 It contains the following key features:
 - Search place: search place through Google Places autocomplete feature
-- Current weather: display current weather and the weather conditions like humidity, pressure and so on.
-- Hourly weather forecasts
+- Save locations: save searched locations to a database and allow user to select them to view the weather
+- Current weather: display current weather and weather conditions for the user-selected location
+- Hourly weather forecasts with a line chart
 - Daily weather forecasts
+- Current location: get user's current location from the device
+
 ## Technologies used
 - React Native
 - JavaScript
 - Expo
+- Expo SQLite
+- Expo Location
 - GooglePlacesAutocomplete library
+- Google reverse geocoding API
 - OpenWeather API
+
 ## Installation
 To run this project, please follow the steps below
 1. git clone the project
