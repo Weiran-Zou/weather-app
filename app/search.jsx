@@ -6,7 +6,7 @@ import { router } from 'expo-router';
 import { useContext, useEffect, useState } from "react";
 import { LocationContext } from "../context/locationContext";
 import { COLORS } from "../constants/Colors.jsx";
-import { openDB, getAllLocItems, closeDB, deleteLocItem } from "../utils/Database.jsx"
+import { openDB, getAllLocItems, deleteLocItem } from "../utils/Database.jsx"
 import MyText from "../components/UIElements/MyText.jsx";
 import LocationItem from "../components/location/LocationItem.jsx";
 import Entypo from '@expo/vector-icons/Entypo';
@@ -21,14 +21,12 @@ export default function search () {
     const db = await openDB();
     let locs = await getAllLocItems(db);
     setSavedLocs(locs);
-    await closeDB();
   }
   async function onDeleteItem(item) {
     let newSavedLocs = savedLocs.filter((loc) => loc.rowid !== item.rowid);
     setSavedLocs(newSavedLocs);
     const db = await openDB();
     await deleteLocItem(db, item);
-    await closeDB();
   }
   function clearSearchInput() {
     setSearchText("");

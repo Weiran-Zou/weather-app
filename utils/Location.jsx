@@ -1,5 +1,5 @@
 import * as Location from 'expo-location';
-import { openDB, closeDB, createTable, getLatestLocItem } from "../utils/Database";
+import { openDB, getLatestLocItem } from "../utils/Database";
 import { fetchPlace } from "../utils/Api"
 
 // get user's current location
@@ -28,9 +28,7 @@ export async function getLatestSavedLoc() {
   let savedLoc = null;
   try {
     const db = await openDB();
-    await createTable(db);
     savedLoc = await getLatestLocItem(db);
-    await closeDB();
   } catch (err) {
     
   }

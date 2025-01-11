@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { router } from 'expo-router';
-import { openDB, closeDB, saveLocItem } from "../utils/Database";
-import { getCurrentLoc, getLatestSavedLoc } from "../utils/Location"
+import { openDB, saveLocItem, initDB } from "../utils/Database";
+import { getCurrentLoc, getLatestSavedLoc} from "../utils/Location"
 
 export default function useLocation() {
   const [loc, setLoc] = useState(null);
@@ -26,10 +26,10 @@ export default function useLocation() {
     setLoc(value);
     const db = await openDB();
     await saveLocItem(db, value);
-    await closeDB();
   }
 
   useEffect(() => {
+    initDB();
     getLoc();
   }, [])
   return { loc, setLoc, saveLoc }

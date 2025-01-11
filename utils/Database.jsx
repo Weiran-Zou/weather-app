@@ -1,5 +1,17 @@
 import * as SQLite from 'expo-sqlite';
 
+
+// initialise database
+export async function initDB() {
+  try {
+    const db = await openDB();
+    await createTable(db);
+  } catch (err) {
+    console.log("initDB err")
+    console.log(err)
+  }
+}
+
 export async function openDB() {
   let db;
   try {
@@ -10,20 +22,12 @@ export async function openDB() {
   return db;
 }
 
-export async function closeDB() {
-  try {
-    await SQLite.close("weather");
-  } catch (err) {
-
-  }
-}
-
 // create a locations table
-export async function createTable(db) {
+async function createTable(db) {
   try {
     await db.execAsync('CREATE TABLE IF NOT EXISTS locations (lat REAL NOT NULL, lng REAL NOT NULL, place TEXT NOT NULL)')
   } catch (err) {
-    console.log("createTable")
+    console.log("createTable err")
     console.log(err)
   }
 }
@@ -34,7 +38,7 @@ export async function getLatestLocItem(db) {
   try {
     item = await db.getFirstAsync('SELECT * FROM locations ORDER BY rowid DESC');
   } catch (err) {
-    console.log("getLatestLocItem")
+    console.log("getLatestLocItem err")
     console.log(err)
   }
   return item;
@@ -51,7 +55,7 @@ export async function saveLocItem(db, item) {
     }
     await db.execAsync(`INSERT INTO locations (lat, lng, place) VALUES (${item.lat}, ${item.lng}, '${item.place}')`);
   } catch (err) {
-    console.log("saveLocItem")
+    console.log("saveLocItem err")
     console.log(err)
   }
 }
@@ -61,7 +65,7 @@ export async function getAllLocItems(db) {
   try {
     locItems = await db.getAllAsync('SELECT rowid, lat, lng, place FROM locations ORDER BY rowid DESC');
   } catch (err) {
-    console.log("getAllLocItems");
+    console.log("getAllLocItems err");
     console.log(err);
   }
   return locItems;
@@ -71,7 +75,7 @@ export async function deleteLocItem(db, item) {
   try {
     await db.runAsync('DELETE from locations WHERE rowid = $rowid', {$rowid: item.rowid});
   } catch (err) {
-    console.log("deleteLocItem");
+    console.log("deleteLocItem err");
     console.log(err);
   }
 }
