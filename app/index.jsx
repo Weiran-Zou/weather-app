@@ -21,6 +21,7 @@ export default function Index() {
   const { loc, setLoc } = useContext(LocationContext);
 
   async function getCurrentLocation() {
+    setIsLoading(true)
     let currentLoc = await getCurrentLoc();
     if (currentLoc) {
       setLoc(currentLoc);
