@@ -1,5 +1,5 @@
-import { useState, useContext, useEffect } from "react";
-import { View, StyleSheet, ScrollView, ActivityIndicator, Pressable, Linking } from "react-native";
+import { useState, useContext, useEffect, useCallback } from "react";
+import { View, StyleSheet, ScrollView, ActivityIndicator, Pressable, Linking, RefreshControl } from "react-native";
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import 'react-native-get-random-values'
@@ -19,6 +19,13 @@ export default function Index() {
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { loc, setLoc } = useContext(LocationContext);
+  const [refreshing, setRefreshing] = useState(false);
+  
+  onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await fetchData()
+    setRefreshing(false);
+  }, [loc])
 
   async function getCurrentLocation() {
     setIsLoading(true)
@@ -70,14 +77,11 @@ export default function Index() {
         </View>
         
       )}
-      {/* Displaying text when no place is searched */}
-      {!weatherData && !isLoading && (
-        <View style={styles.noPlaceContainer}>  
-          <MyText title style={styles.noPlaceText}>Please search a place to view the weather.</MyText>
-        </View>
-      )} 
       {weatherData && !isLoading && (
-        <ScrollView contentContainerStyle={{alignItems:"center", rowGap:30}}>  
+        <ScrollView 
+          contentContainerStyle={{alignItems:"center", rowGap:30}}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        >  
           <WeatherMain iconCode={weatherData.current.weather[0].icon} temperature={weatherData.current.temp}/>
           <WeatherHourlyList data={weatherData.hourly}/>
           <WeatherDailyList data={weatherData.daily} />

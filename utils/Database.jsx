@@ -15,7 +15,9 @@ export async function initDB() {
 export async function openDB() {
   let db;
   try {
-    db = await SQLite.openDatabaseAsync("weather");
+    db = await SQLite.openDatabaseAsync("weather", {
+      useNewConnection: true
+  });
   } catch (err) {
     console.log(err)
   }
